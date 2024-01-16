@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Fun Store</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 20px;
+            background-color: #FFB6C1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3366cc;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product {
+            width: 300px;
+            border: 2px solid #3366cc;
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+            border-radius: 10px;
+            margin: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+        }
+
+        p {
+            color: #444;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 2px solid #3366cc;
+            border-radius: 5px;
+        }
+
+        .no-products {
+            text-align: center;
+            color: #555;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Kids Fun Store</h1>
+
+    <input type="text" id="searchInput" placeholder="Search for products..." oninput="searchProducts()">
+
+    <div class="product-container" id="productContainer">
+        <!-- Products will be dynamically added here based on the search -->
+    </div>
+
+    <p id="noProductsMessage" class="no-products" style="display: none;">No products available</p>
+
+    <script>
+        const products = [
+            { name: "Micky Mouse Wall Sticker", image: "https://m.media-amazon.com/images/I/71hII4WgPvL._SX425_.jpg" },
+            { name: "Cute SpongeBob stuffed toy", image: "https://m.media-amazon.com/images/I/61Ep7COAOqL._SY450_.jpg" },
+            { name: "Cute Keychain Set", image: "https://m.media-amazon.com/images/I/61rtVumIvqL._SX679_.jpg" },
+            { name: "MeBean Bottle", image: "https://m.media-amazon.com/images/I/51cN6jG8NwS._SL1129_.jpg" },
+            { name: "Doremon Mug", image: "https://m.media-amazon.com/images/I/41XlH-zkEzL.jpg" },
+        ];
+
+        // Initial rendering of products
+        renderProducts(products);
+
+        function renderProducts(productsToRender) {
+            const productContainer = document.getElementById("productContainer");
+            const noProductsMessage = document.getElementById("noProductsMessage");
+            
+            productContainer.innerHTML = "";
+            noProductsMessage.style.display = "none";
+
+            if (productsToRender.length === 0) {
+                noProductsMessage.style.display = "block";
+            }
+
+            productsToRender.forEach(product => {
+                const productDiv = document.createElement("div");
+                productDiv.className = "product";
+
+                const productLink = document.createElement("a");
+                productLink.href = "#"; // Replace with actual product URL
+                productLink.target = "_blank";
+
+                const productImage = document.createElement("img");
+                productImage.src = product.image;
+                productImage.alt = product.name;
+
+                const productName = document.createElement("p");
+                productName.textContent = product.name;
+
+                productLink.appendChild(productImage);
+                productDiv.appendChild(productLink);
+                productDiv.appendChild(productName);
+
+                productContainer.appendChild(productDiv);
+            });
+        }
+
+        function searchProducts() {
+            const searchInput = document.getElementById("searchInput");
+            const searchTerm = searchInput.value.toLowerCase();
+
+            const filteredProducts = products.filter(product => {
+                return product.name.toLowerCase().includes(searchTerm);
+            });
+
+            renderProducts(filteredProducts);
+        }
+    </script>
+
+</body>
+</html>
